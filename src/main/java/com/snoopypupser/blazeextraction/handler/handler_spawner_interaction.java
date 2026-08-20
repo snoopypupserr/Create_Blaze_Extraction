@@ -121,7 +121,9 @@ public class handler_spawner_interaction {
             if (!player.isCreative()) {
                 stack.shrink(1);
             }
-            player.setItemInHand(event.getHand(), filledBurner);
+            if (!player.getInventory().add(filledBurner)) {
+                player.drop(filledBurner, false);
+            }
 
             level.playSound(null, pos, SoundEvents.BLAZE_SHOOT, SoundSource.BLOCKS,
                     0.02f, 1.2f);
