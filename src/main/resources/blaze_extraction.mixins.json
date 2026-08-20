@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.snoopypupser.blazeextraction.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "spawner_block_entity_mixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

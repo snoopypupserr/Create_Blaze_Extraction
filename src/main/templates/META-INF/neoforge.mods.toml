@@ -1,0 +1,38 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+description='''
+Extends the vanilla Blaze Spawner with an inventory for Create automation.
+When a Deployer holds an Empty Blaze Burner and targets a Blaze Spawner,
+it fills the burner and places it into the spawner's output inventory.
+Funnels and Belts can then extract the filled Blaze Burner automatically.
+'''
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="create"
+    type="optional"
+    versionRange="[6.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
