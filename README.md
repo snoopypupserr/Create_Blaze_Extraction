@@ -1,25 +1,52 @@
+# Blaze Extraction
 
-Installation information
-=======
+Adds an output inventory slot to Blaze Spawners, enabling full Create automation of Blaze Burner filling.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+---
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+## What it does
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+Vanilla Blaze Spawners have no inventory, making it impossible to automate Blaze Burner filling with Create. This mod fixes that by:
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+- Adding an output slot to every Blaze Spawner
+- Making that slot accessible to Funnels, Belts, and other Create logistics blocks
+- Supporting Create's Deployer as the filling mechanism
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+---
+
+## Usage
+
+### How to automate it using Create:
+
+1. Aim a **Deployer** at a Blaze Spawner and supply it with **Empty Blaze Burners**
+2. The Deployer "right-clicks" the spawner, fills a burner, and deposits it into the spawner's output slot
+3. Attach a **Funnel** or **Belt with funnel** to the spawner to extract the filled burners automatically
+
+> Only works on actual Blaze Spawners. The mod checks the spawner's entity type and ignores all others.
+
+---
+
+## Installation
+
+1. Install [NeoForge 21.1.235+](https://neoforged.net/) for Minecraft 1.21.1
+2. Download the latest `blaze_extraction-x.x.x.jar` from the [Releases](../../releases) page or directly trough Curseforge/Modrinth
+3. Place the `.jar` file into your `mods/` folder
+4. Launch the game
+
+[Create 6.0.0+](https://www.curseforge.com/minecraft/mc-mods/create) is required for automation.
+
+---
+
+## Requirements
+
+| Dependency | Version  | 
+|------------|----------|
+| Minecraft  | 1.21.1   | 
+| NeoForge   | 21.1.235+ | 
+| Create     | 6.0.0+ |  
+
+---
+
+## License
+
+MIT
