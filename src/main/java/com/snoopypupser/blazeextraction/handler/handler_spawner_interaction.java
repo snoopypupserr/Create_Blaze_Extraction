@@ -84,40 +84,58 @@ public class handler_spawner_interaction {
         if (filledItem == null || filledItem == Items.AIR) {
             return;
         }
-        ItemStack filledBurner = new ItemStack(filledItem);
 
         Player player = event.getEntity();
-        ItemStackHandler inventory = holder.blazeExtraction$getInventory();
-        boolean isCreative = player.isCreative();
+        boolean isDeployer = player instanceof FakePlayer;
 
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            ItemStack testInsert = inventory.insertItem(i, filledBurner.copy(), true);
-            if (testInsert.isEmpty()) {
-                if (!isCreative) {
+        if (isDeployer) {
+            ItemStack filledBurner = new ItemStack(filledItem);
+            ItemStackHandler inventory = holder.blazeExtraction$getInventory();
+
+            for (int i = 0; i < inventory.getSlots(); i++) {
+                ItemStack testInsert = inventory.insertItem(i, filledBurner.copy(), true);
+                if (testInsert.isEmpty()) {
                     stack.shrink(1);
-                }
-                inventory.insertItem(i, filledBurner.copy(), false);
-
-                if (player instanceof FakePlayer) {
+                    inventory.insertItem(i, filledBurner.copy(), false);
                     player.setItemInHand(event.getHand(), stack);
-                }
 
-                spawnerBE.setChanged();
-                level.playSound(null, pos, SoundEvents.BLAZE_SHOOT, SoundSource.BLOCKS,
-                        0.02f, 1.2f);
-                double x = pos.getX() + 0.5;
-                double y = pos.getY() + 0.5;
-                double z = pos.getZ() + 0.5;
-                for (int p = 0; p < 8; p++) {
-                    double dx = (level.random.nextDouble() - 0.5) * 0.8;
-                    double dy = level.random.nextDouble() * 0.6;
-                    double dz = (level.random.nextDouble() - 0.5) * 0.8;
-                    ((ServerLevel) level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, x + dx, y + dy, z + dz, 1, 0.0, 0.02, 0.0, 0.01);
+                    spawnerBE.setChanged();
+                    level.playSound(null, pos, SoundEvents.BLAZE_SHOOT, SoundSource.BLOCKS,
+                            0.02f, 1.2f);
+                    double x = pos.getX() + 0.5;
+                    double y = pos.getY() + 0.5;
+                    double z = pos.getZ() + 0.5;
+                    for (int p = 0; p < 8; p++) {
+                        double dx = (level.random.nextDouble() - 0.5) * 0.8;
+                        double dy = level.random.nextDouble() * 0.6;
+                        double dz = (level.random.nextDouble() - 0.5) * 0.8;
+                        ((ServerLevel) level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, x + dx, y + dy, z + dz, 1, 0.0, 0.02, 0.0, 0.01);
+                    }
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x, y + 0.6, z, 4, 0.15, 0.1, 0.15, 0.005);
+                    event.setCanceled(true);
+                    return;
                 }
-                ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x, y + 0.6, z, 4, 0.15, 0.1, 0.15, 0.005);
-                event.setCanceled(true);
-                return;
             }
+        } else {
+            ItemStack filledBurner = new ItemStack(filledItem);
+            if (!player.isCreative()) {
+                stack.shrink(1);
+            }
+            player.setItemInHand(event.getHand(), filledBurner);
+
+            level.playSound(null, pos, SoundEvents.BLAZE_SHOOT, SoundSource.BLOCKS,
+                    0.02f, 1.2f);
+            double x = pos.getX() + 0.5;
+            double y = pos.getY() + 0.5;
+            double z = pos.getZ() + 0.5;
+            for (int p = 0; p < 8; p++) {
+                double dx = (level.random.nextDouble() - 0.5) * 0.8;
+                double dy = level.random.nextDouble() * 0.6;
+                double dz = (level.random.nextDouble() - 0.5) * 0.8;
+                ((ServerLevel) level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, x + dx, y + dy, z + dz, 1, 0.0, 0.02, 0.0, 0.01);
+            }
+            ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, x, y + 0.6, z, 4, 0.15, 0.1, 0.15, 0.005);
+            event.setCanceled(true);
         }
     }
 }
